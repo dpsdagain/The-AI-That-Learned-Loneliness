@@ -60,6 +60,7 @@ export const SceneOrchestrator: React.FC<Props> = ({
 
   // Time management
   const [globalTime, setGlobalTime] = useState(0);
+  const globalTimeRef = useRef(0);
   const animFrameRef = useRef<number>(0);
   const lastTimestampRef = useRef(0);
   const isPlayingRef = useRef(false);
@@ -101,8 +102,10 @@ export const SceneOrchestrator: React.FC<Props> = ({
       const next = prev + dt;
       if (next >= totalDuration) {
         isPlayingRef.current = false;
+        globalTimeRef.current = totalDuration;
         return totalDuration;
       }
+      globalTimeRef.current = next;
       return next;
     });
 
@@ -117,16 +120,16 @@ export const SceneOrchestrator: React.FC<Props> = ({
       play: () => { isPlayingRef.current = true; lastTimestampRef.current = 0; animFrameRef.current = requestAnimationFrame(animate); },
       pause: () => { isPlayingRef.current = false; cancelAnimationFrame(animFrameRef.current); },
       toggle: () => { isPlayingRef.current ? controls.pause() : controls.play(); },
-      restart: () => { setGlobalTime(0); controls.play(); },
-      seek: (t: number) => setGlobalTime(clamp(t, 0, totalDuration)),
-      getTime: () => globalTime,
+      restart: () => { setGlobalTime(0); globalTimeRef.current = 0; controls.play(); },
+      seek: (t: number) => { const nt = clamp(t, 0, totalDuration); setGlobalTime(nt); globalTimeRef.current = nt; },
+      getTime: () => globalTimeRef.current,
       getTotalDuration: () => totalDuration,
       isPlaying: () => isPlayingRef.current,
     };
     (window as any).__director = controls;
 
     return () => { cancelAnimationFrame(animFrameRef.current); };
-  }, [mode, animate, totalDuration, globalTime]);
+  }, [mode, animate, totalDuration]);
 
   // Render active scene
   const SceneComponent = SCENE_REGISTRY[activeSceneEntry.id];
