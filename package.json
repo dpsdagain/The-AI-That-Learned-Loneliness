@@ -1,0 +1,52 @@
+{
+  "name": "ai-loneliness-v2",
+  "version": "2.0.0",
+  "private": true,
+  "description": "The AI That Learned Loneliness — Cinematic sci-fi short film built with React, Three.js, GSAP, and Remotion",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "studio": "remotion studio",
+    "render": "remotion render src/remotion/index.ts AILoneliness out/video.mp4 --codec=h264 --image-format=jpeg --quality=95 --concurrency=4",
+    "render:hd": "remotion render src/remotion/index.ts AILoneliness out/video_1080p.mp4 --codec=h264 --image-format=jpeg --quality=95 --width=1920 --height=1080",
+    "render:4k": "remotion render src/remotion/index.ts AILoneliness out/video_4k.mp4 --codec=h264 --image-format=jpeg --quality=95 --width=3840 --height=2160 --concurrency=2",
+    "render:png": "remotion render src/remotion/index.ts AILoneliness out/frames --image-format=png --sequence",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0",
+    "@react-three/fiber": "^8.17.10",
+    "@react-three/drei": "^9.117.0",
+    "@react-three/postprocessing": "^2.16.3",
+    "gsap": "^3.12.5",
+    "remotion": "^4.0.242",
+    "@remotion/cli": "^4.0.242",
+    "@remotion/renderer": "^4.0.242",
+    "@remotion/three": "^4.0.242",
+    "postprocessing": "^6.36.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.170.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.5",
+    "vite-plugin-glsl": "^1.3.1"
+  },
+  "keywords": [
+    "cinematic",
+    "animation",
+    "cyberpunk",
+    "three.js",
+    "remotion",
+    "gsap",
+    "webgl",
+    "sci-fi"
+  ],
+  "license": "MIT"
+}
